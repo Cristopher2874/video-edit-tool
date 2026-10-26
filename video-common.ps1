@@ -56,3 +56,19 @@ function Invoke-VideoEncode([string]$Executable, [string[]]$Arguments) {
     if ($LASTEXITCODE -ne 0) { throw "FFmpeg failed with exit code $LASTEXITCODE." }
 }
 function Format-Seconds([double]$Value) { return $Value.ToString('0.######', $culture) }
+
+# Keep the main action near normal speed and spend any remaining time on the tail.
+# Shared by change-speed.ps1 and the timeline renderer, so composites need only one encode.
+function Get-TailSpeedFilter([double]$SourceDuration, [double]$Speed, [double]$TailSeconds, [double]$TargetDuration) {
+    foreach ($value in @($SourceDuration, $Speed, $TailSeconds, $TargetDuration)) {
+        if ([double]::IsNaN($value) -or [double]::IsInfinity($value) -or $value -le 0) { throw 'Tail timing values must be finite and positive.' }
+    }
+    if ($TailSeconds -ge $SourceDuration) { throw 'TailSeconds must be shorter than the selected footage.' }
+    if ($TargetDuration -lt $SourceDuration / $Speed) { throw 'TargetDuration must fit all footage at the requested main speed.' }
+    $main = $SourceDuration - $TailSeconds
+    $mainOutput = $main / $Speed
+    $tailFactor = ($TargetDuration - $mainOutput) / $TailSeconds
+    $m = Format-Seconds $main; $s = Format-Seconds $Speed
+    $o = Format-Seconds $mainOutput; $f = Format-Seconds $tailFactor
+    return "setpts='if(lt(PTS-STARTPTS,${m}/TB),(PTS-STARTPTS)/${s},${o}/TB+((PTS-STARTPTS)-${m}/TB)*${f})'"
+}

@@ -3,7 +3,7 @@
 Creates a silent, static MP4 from an image.
 
 .EXAMPLE
-.\image-to-video.ps1 -Image '.\nitro-101-intro-card.png'
+.\image-to-video.ps1 -Image '.\local-work\shared\images\title.png'
 
 .EXAMPLE
 .\image-to-video.ps1 -Image 'C:\Videos\end-card.png' -Duration 2 -Output 'C:\Videos\outro.mp4'

@@ -1,1 +1,30 @@
-local_assets
+# Private work stays local, including plans, notes, media, logs and renders.
+/local-work/
+
+# Legacy locations remain protected if older workflows recreate them.
+/local_assets/
+/videos/
+/images/
+/templates/
+/tests/
+/preview/
+/cuts.md
+/*-plan*.json
+/*-render*.log
+/*-render-notes*.md
+/capsule*-cuts*.md
+/render-capsule*.ps1
+
+# Media accidentally written outside the private workspace is also ignored.
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+*.mp3
+*.wav
+*.m4a
+*.png
+*.jpg
+*.jpeg
+*.pptx
