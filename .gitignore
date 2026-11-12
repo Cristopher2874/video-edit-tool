@@ -28,3 +28,11 @@
 *.jpg
 *.jpeg
 *.pptx
+
+# Local speech engines/models; job outputs belong under /local-work/.
+*.exe
+*.dll
+ggml-*.bin
+/tools/transcription/*.wav
+/tools/transcription/transcript.*
+/tools/transcription/transcription.log

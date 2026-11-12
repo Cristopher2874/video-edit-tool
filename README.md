@@ -7,6 +7,11 @@ Run from this repository in Windows PowerShell 5.1 or PowerShell 7. Install
 FFmpeg and FFprobe on PATH, or pass `-FFmpeg` / `-FFprobe` executable paths.
 Keep `video-common.ps1` beside the editing scripts.
 
+For offline speech transcription, see [tools/transcription](tools/transcription/README.md).
+Its standalone script uses FFmpeg and whisper.cpp; keep separate jobs under
+ignored `local-work/transcription-jobs/` and shared models/binaries under
+`local-work/shared/transcription/`.
+
 ## Public tools, private work
 
 The repository contains reusable scripts, this README, AGENTS.md and .gitignore.
